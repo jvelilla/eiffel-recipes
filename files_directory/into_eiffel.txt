@@ -1,0 +1,6 @@
+Into Eiffel 
+
+Eiffel is an ISO-standardized, object-oriented programming language designed by Bertrand Meyer (an object-orientation proponent and author of Object-Oriented Software Construction) and Eiffel Software. The design of the language is closely connected with the Eiffel programming method. Both are based on a set of principles, including design by contract, command-query separation, the uniform-access principle, the single-choice principle, the open-closed principle, and option-operand separation.
+
+Wikipedia
+http://en.wikipedia.org/wiki/Eiffel_%28programming_language%29
