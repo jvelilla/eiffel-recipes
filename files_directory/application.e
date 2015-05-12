@@ -53,7 +53,16 @@ feature {NONE} -- Initialization
 			read_file_to_string (l_path)
 			create l_path.make_from_string ("into_eiffel.txt")
 			read_file_to_collecton (l_path)
+
+
+				-- Write Content
+
+			write_text_to_file
+			append_data_to_file
+			merge_file
 		end
+
+feature -- File, Directory: READ
 
 	entries (a_dir: DIRECTORY)
 			-- Show entires for the current directory `a_dir'.
@@ -70,7 +79,7 @@ feature {NONE} -- Initialization
 		end
 
 	each_dir (a_dir: DIRECTORY)
-			-- -- Show only directories for the current directory `a_dir'.
+			-- Show only directories for the current directory `a_dir'.
 		require
 			exists: a_dir.exists
 		local
@@ -89,7 +98,7 @@ feature {NONE} -- Initialization
 		end
 
 	each_file (a_dir: DIRECTORY)
-			-- -- Show only files for the current directory `a_dir'.
+			-- Show only files for the current directory `a_dir'.
 		require
 			exists: a_dir.exists
 		local
@@ -108,26 +117,25 @@ feature {NONE} -- Initialization
 		end
 
 	each_recursive_dir (a_dir: DIRECTORY)
-            -- Show how to traverse the entire directory tree starting at directory `a_dir'.
-        local
-            dir: DIRECTORY
-            entry: PATH
-            filename: READABLE_STRING_32
-        do
-            across
-                a_dir.entries as ic
-            loop
-                entry := ic.item
-                if not (entry.is_current_symbol or else entry.is_parent_symbol) then
-                    create dir.make_with_path (a_dir.path.extended_path (entry))
-                    if dir.exists then
-                        print (dir.path.name)
-                        io.put_new_line
-                        each_recursive_dir (dir)
-                    end
-                end
-            end
-        end
+			-- Show how to traverse the entire directory tree starting at directory `a_dir'.
+		local
+			dir: DIRECTORY
+			entry: PATH
+		do
+			across
+				a_dir.entries as ic
+			loop
+				entry := ic.item
+				if not (entry.is_current_symbol or else entry.is_parent_symbol) then
+					create dir.make_with_path (a_dir.path.extended_path (entry))
+					if dir.exists then
+						print (dir.path.name)
+						io.put_new_line
+						each_recursive_dir (dir)
+					end
+				end
+			end
+		end
 
 	read_file_line_by_line (a_path: PATH)
 			-- Show how to read a file line by line.
@@ -215,4 +223,85 @@ feature {NONE} -- Initialization
 			end
 		end
 
+feature -- File, Directory: Write
+
+
+	write_text_to_file
+			-- Show how to write text to a File
+		local
+			l_file: PLAIN_TEXT_FILE
+		do
+			create l_file.make_open_write("file.txt")
+				-- Open the file `hello' for writing;
+				-- create it if it does not exist
+				-- Note: if the file exist, you will lost all the existig info.
+
+				-- Write
+			if l_file.exists and then l_file.is_access_writable then
+				l_file.put_string ("Example: how to write text to a file")
+				l_file.close
+			end
+
+				-- Read the file `file.txt'
+			create l_file.make_open_read("file.txt")
+			if l_file.exists and then l_file.is_readable then
+				l_file.read_stream (l_file.count)
+				io.put_new_line
+				print (l_file.last_string)
+				l_file.close
+			end
+		end
+
+	append_data_to_file
+			-- Show how to append data to a file
+		local
+				l_file: PLAIN_TEXT_FILE
+		do
+			create l_file.make_open_append ("new.text")
+				-- Open the file `hello' for append;
+
+			if l_file.exists and then l_file.is_writable then
+				l_file.put_string ("This is a string line")
+				l_file.put_new_line
+				l_file.put_boolean (True)
+				l_file.put_new_line
+				l_file.put_integer (10)
+				l_file.close
+			end
+		end
+
+
+	merge_file
+			-- Show how to merge files.
+		local
+			l_file: RAW_FILE
+			l_merged_file: RAW_FILE
+			l_path: PATH
+			l_dir: DIRECTORY
+		do
+				-- Path merge
+			create l_path.make_current
+			l_path := l_path.extended ("merge")
+			create l_dir.make_with_path (l_path)
+
+			create l_merged_file.make_with_path (l_path.extended ("merged.log"))
+
+			across
+				l_dir.entries as ic
+			loop
+				create l_file.make_with_path (l_dir.path.extended_path (ic.item))
+				if not l_file.is_directory and then l_file.is_closed then
+					l_merged_file.append (l_file)
+						-- I got the following exeption
+						-- if (amount != fread(buffer, sizeof(char), amount, other))
+						--		eise_io("FILE: unable to read appended file.");	
+--					l_merged_file.open_append
+--					l_file.open_read
+--					l_file.read_stream (l_file.count)
+--					l_merged_file.put_string (l_file.last_string)
+--					l_file.close
+--					l_merged_file.close
+				end
+			end
+		end
 end
