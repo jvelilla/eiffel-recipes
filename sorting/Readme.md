@@ -5,7 +5,7 @@ This library provides an interface [SORTER](https://www.eiffel.org/files/doc/sta
 To use one of this algorithms you will need to implement a partial order comparator defined in the interface [PART_COMPARATOR](https://www.eiffel.org/files/doc/static/20.05/libraries/base_extension/part_comparator_chart.html).
 
 ## Using an existing implementation
-This example uses the [AGENT_EQUALITY_TESTER] (https://www.eiffel.org/files/doc/static/20.05/libraries/base_extension/part_comparator_chart.html)  implementaiton of [PART_COMPARATOR] using agents.
+This example uses the [AGENT_EQUALITY_TESTER](https://www.eiffel.org/files/doc/static/20.05/libraries/base_extension/part_comparator_chart.html)  implementaiton of [PART_COMPARATOR] using agents.
 
 ```
 sort_array (array: INDEXABLE [INTEGER, INTEGER])
@@ -24,7 +24,7 @@ sort_array (array: INDEXABLE [INTEGER, INTEGER])
 ```
 
 ## Implement your own comparator
-To implement our own comparator, just inherit from PART_COMPARATOR and implement the `less_than` feature
+To implement our own comparator, just inherit from `PART_COMPARATOR` and implement the `less_than` feature
 
 ```
 class
@@ -47,11 +47,11 @@ end
 ## Using our comparator
 
 ```
-	sort_array_person (array: INDEXABLE [PERSON, INTEGER])
-	    local
-	        l_sorter: SORTER [PERSON]
-	    do
-	        create {QUICK_SORTER [PERSON]} l_sorter.make (create {PERSON_COMPARATOR})
-	        l_sorter.sort (array)
-	    end
+sort_array_person (array: INDEXABLE [PERSON, INTEGER])
+    local
+        l_sorter: SORTER [PERSON]
+    do
+        create {QUICK_SORTER [PERSON]} l_sorter.make (create {PERSON_COMPARATOR})
+        l_sorter.sort (array)
+    end
 ```
