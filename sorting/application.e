@@ -19,6 +19,7 @@ feature {NONE} -- Initialization
 		do
 			example_array_of_integers
 			example_array_of_person
+			example_sortable_array
 		end
 
 feature -- Sorting Array of Integers
@@ -89,6 +90,22 @@ feature -- Sorting Array of Integers
 		do
 			print (a_integer)
 			print (" ")
+		end
+
+
+feature -- Array of Comparables
+
+	example_sortable_array
+		local
+			l_array: SORTABLE_ARRAY [INTEGER]
+		do
+			create l_array.make_from_array (generate_array (20))
+			print ("Unsorted%N")
+			l_array.do_all (agent do_print)
+			l_array.sort
+			io.put_new_line
+			print ("Sorted%N")
+			l_array.do_all (agent do_print)
 		end
 
 

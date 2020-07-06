@@ -58,3 +58,26 @@ sort_array_person (array: INDEXABLE [PERSON, INTEGER])
         l_sorter.sort (array)
     end
 ```
+
+
+## Using `SORTABLE_ARRAY`
+
+If you are using `ARRAY` you can use the class `SORTABLE_ARRAY`,  which is also available in the library `base_extension`.
+
+### example
+```
+	example_sortable_array
+		local
+			l_array: SORTABLE_ARRAY [INTEGER]
+		do
+			create l_array.make_from_array (generate_array (20))
+			print ("Unsorted%N")
+			l_array.do_all (agent do_print)
+			l_array.sort
+			io.put_new_line
+			print ("Sorted%N")
+			l_array.do_all (agent do_print)
+		end
+```
+
+If you want to sort an array of a user defined class you will need to implement `COMPARABLE`
