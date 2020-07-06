@@ -7,7 +7,7 @@ You can use a partial order comparator defined in the interface [PART_COMPARATOR
 
 
 ## Using an existing implementation
-This example uses the [AGENT_EQUALITY_TESTER](https://www.eiffel.org/files/doc/static/20.05/libraries/base_extension/part_comparator_chart.html)  implementaiton of [PART_COMPARATOR] using agents.
+This example uses the [AGENT_EQUALITY_TESTER](https://www.eiffel.org/files/doc/static/20.05/libraries/base_extension/part_comparator_chart.html)  implementaton of [PART_COMPARATOR] using agents.
 
 
 ```
